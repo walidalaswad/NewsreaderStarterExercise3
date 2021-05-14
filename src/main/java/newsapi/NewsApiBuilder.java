@@ -24,7 +24,7 @@ public class NewsApiBuilder {
         return this;
     }
 
-    public NewsApiBuilder setqInTitle(String qInTitle) {
+    public NewsApiBuilder setQInTitle(String qInTitle) {
         this.qInTitle = qInTitle;
         return this;
     }

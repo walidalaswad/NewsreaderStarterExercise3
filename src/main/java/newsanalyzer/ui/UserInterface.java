@@ -19,24 +19,25 @@ public class UserInterface
 	}
 
 	public void getDataFromCtrl2(){
+		// TODO implement me
 	}
 
 	public void getDataFromCtrl3(){
-
+		// TODO implement me
 	}
 	
 	public void getDataForCustomInput() {
-		
+		// TODO implement me
 	}
 
 
 	public void start() {
-		Menu<Runnable> menu = new Menu<>("User Interfacx");
+		Menu<Runnable> menu = new Menu<>("User Interface");
 		menu.setTitel("Wählen Sie aus:");
 		menu.insert("a", "Choice ABC", this::getDataFromCtrl1);
 		menu.insert("b", "Choice DEF", this::getDataFromCtrl2);
 		menu.insert("c", "Choice 3", this::getDataFromCtrl3);
-		menu.insert("d", "Choice User Imput:",this::getDataForCustomInput);
+		menu.insert("d", "Choice User Input:",this::getDataForCustomInput);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
 		while ((choice = menu.exec()) != null) {
