@@ -1,15 +1,14 @@
-package newsanalyzer.ui;
+package at.ac.fhcampuswien.newsanalyzer.ui;
 
+
+import at.ac.fhcampuswien.newsanalyzer.ctrl.Controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import newsanalyzer.ctrl.Controller;
-
 public class UserInterface 
 {
-
 	private Controller ctrl = new Controller();
 
 	public void getDataFromCtrl1(){
@@ -33,7 +32,7 @@ public class UserInterface
 
 	public void start() {
 		Menu<Runnable> menu = new Menu<>("User Interface");
-		menu.setTitel("Wählen Sie aus:");
+		menu.setTitle("Wählen Sie aus:");
 		menu.insert("a", "Choice ABC", this::getDataFromCtrl1);
 		menu.insert("b", "Choice DEF", this::getDataFromCtrl2);
 		menu.insert("c", "Choice 3", this::getDataFromCtrl3);

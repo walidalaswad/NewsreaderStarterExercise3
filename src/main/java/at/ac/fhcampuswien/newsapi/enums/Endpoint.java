@@ -1,11 +1,11 @@
-package newsapi.enums;
+package at.ac.fhcampuswien.newsapi.enums;
 
 public enum Endpoint {
     TOP_HEADLINES("top-headlines"),
 
     EVERYTHING("everything");
 
-    private String endPoint;
+    private final String endPoint;
 
     Endpoint(String endPoint){
         this.endPoint = endPoint;

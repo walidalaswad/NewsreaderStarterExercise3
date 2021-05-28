@@ -1,4 +1,4 @@
-package newsanalyzer.ui;
+package at.ac.fhcampuswien.newsanalyzer.ui;
 
 
 import java.io.BufferedReader;
@@ -22,34 +22,34 @@ public class Menu<T> {
 
 	private static final String NEW_LINE = "\n";
 	
-	private String titel;
+	private String title;
 	
-	private List<MenuEntry<T>> menuEintraege;
+	private final List<MenuEntry<T>> menuEntries;
 
 	Menu(String title) {
-		menuEintraege = new ArrayList<>();
-		this.setTitel(title);
+		menuEntries = new ArrayList<>();
+		this.setTitle(title);
 	}
 
-	public void setTitel(String titel) {
-		this.titel = titel;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getTitel() {
-		return titel;
+	public String getTitle() {
+		return title;
 	}
 
 	void insert(String key, String text, T element) {
-		menuEintraege.add(new MenuEntry<>(key, text, element));
+		menuEntries.add(new MenuEntry<>(key, text, element));
 	}
 
 	T exec() {
-		System.out.println(NEW_LINE + NEW_LINE + titel);
-		for (int i = 0; i < titel.length(); i++)
+		System.out.println(NEW_LINE + NEW_LINE + title);
+		for (int i = 0; i < title.length(); i++)
 			System.out.print("*");
 		
 		System.out.print(NEW_LINE);
-		menuEintraege.forEach(m -> System.out.println(m.key + ")\t" + m.text));
+		menuEntries.forEach(m -> System.out.println(m.key + ")\t" + m.text));
 		System.out.print(NEW_LINE);
 		
 		BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
@@ -64,7 +64,7 @@ public class Menu<T> {
 				System.out.println("Exit with Ctrl C");
 			}
 			if (value.length() > 0) {
-				for (MenuEntry<T> m : menuEintraege)
+				for (MenuEntry<T> m : menuEntries)
 					if (m.key.trim().equalsIgnoreCase(value.trim()))
 						return m.element;
 
@@ -75,6 +75,6 @@ public class Menu<T> {
 	
 	@Override
 	public String toString() {
-		return getTitel();
+		return getTitle();
 	}
 }

@@ -1,19 +1,29 @@
-package newsapi;
+package at.ac.fhcampuswien.newsapi;
+
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import newsapi.beans.NewsReponse;
-import newsapi.enums.*;
+import at.ac.fhcampuswien.newsapi.beans.NewsResponse;
+import at.ac.fhcampuswien.newsapi.enums.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
 public class NewsApi {
 
     public static final String DELIMITER = "&";
 
+    /**
+     * For detailed documentation of the API see: https://newsapi.org/docs
+     *
+     * %s is a filler for endpoint like top-headlines, everything (see /newsapi/enums/Endpoint)
+     * q=%s is a filler for specified query
+     *
+     * Example URL: https://newsapi.org/v2/top-headlines?country=us&apiKey=myKey
+     */
     public static final String NEWS_API_URL = "http://newsapi.org/v2/%s?q=%s&apiKey=%s";
 
     private Endpoint endpoint;
@@ -106,7 +116,7 @@ public class NewsApi {
 
     protected String requestData() {
         String url = buildURL();
-        System.out.println("URL: "+url);
+        System.out.println("URL: " + url);
         URL obj = null;
         try {
             obj = new URL(url);
@@ -135,6 +145,8 @@ public class NewsApi {
         // TODO ErrorHandling
         String urlbase = String.format(NEWS_API_URL,getEndpoint().getValue(),getQ(),getApiKey());
         StringBuilder sb = new StringBuilder(urlbase);
+
+        System.out.println(urlbase);
 
         if(getFrom() != null){
             sb.append(DELIMITER).append("from=").append(getFrom());
@@ -172,14 +184,14 @@ public class NewsApi {
         return sb.toString();
     }
 
-    public NewsReponse getNews() {
-        NewsReponse newsReponse = null;
+    public NewsResponse getNews() {
+        NewsResponse newsReponse = null;
         String jsonResponse = requestData();
         if(jsonResponse != null && !jsonResponse.isEmpty()){
 
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                newsReponse = objectMapper.readValue(jsonResponse, NewsReponse.class);
+                newsReponse = objectMapper.readValue(jsonResponse, NewsResponse.class);
                 if(!"ok".equals(newsReponse.getStatus())){
                     System.out.println("Error: "+newsReponse.getStatus());
                 }

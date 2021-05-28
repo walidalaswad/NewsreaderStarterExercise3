@@ -1,4 +1,4 @@
-package newsapi.enums;
+package at.ac.fhcampuswien.newsapi.enums;
 
 public enum Country {
     ar,

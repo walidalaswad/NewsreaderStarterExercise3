@@ -1,6 +1,6 @@
-package newsapi;
+package at.ac.fhcampuswien.newsapi;
 
-import newsapi.enums.*;
+import at.ac.fhcampuswien.newsapi.enums.*;
 
 public class NewsApiBuilder {
 

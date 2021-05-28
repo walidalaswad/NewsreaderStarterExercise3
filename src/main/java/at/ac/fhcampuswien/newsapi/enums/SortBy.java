@@ -1,7 +1,7 @@
-package newsapi.enums;
+package at.ac.fhcampuswien.newsapi.enums;
 
 public enum SortBy {
-    RELEVANCY, POPULARITY, PUBLISHEDAT
+    RELEVANCY, POPULARITY, PUBLISHED
 
     //relevancy = articles more closely related to q come first.
     //popularity = articles from popular sources and publishers come first.

@@ -1,28 +1,28 @@
-package newsapi;
+package at.ac.fhcampuswien.newsapi;
 
-import newsapi.beans.Article;
-import newsapi.beans.NewsReponse;
-import newsapi.enums.Category;
-import newsapi.enums.Country;
-import newsapi.enums.Endpoint;
+import at.ac.fhcampuswien.newsapi.beans.Article;
+import at.ac.fhcampuswien.newsapi.beans.NewsResponse;
+import at.ac.fhcampuswien.newsapi.enums.Category;
+import at.ac.fhcampuswien.newsapi.enums.Country;
+import at.ac.fhcampuswien.newsapi.enums.Endpoint;
 
 import java.util.List;
 
 public class NewsAPIExample {
 
-    public static final String APIKEY = "1b724c4797104aee8879fec8762ec227";
+    public static final String APIKEY = "myKey";    //TODO add your api key
 
     public static void main(String[] args){
 
         NewsApi newsApi = new NewsApiBuilder()
                 .setApiKey(APIKEY)
                 .setQ("corona")
-                .setEndPoint(Endpoint.TOP_HEADLINES)
-                .setSourceCountry(Country.at)
-                .setSourceCategory(Category.health)
+                .setEndPoint(Endpoint.TOP_HEADLINES)// example of how to use enums
+                .setSourceCountry(Country.at)       // example of how to use enums
+                .setSourceCategory(Category.health) // example of how to use enums
                 .createNewsApi();
 
-            NewsReponse newsResponse = newsApi.getNews();
+            NewsResponse newsResponse = newsApi.getNews();
             if(newsResponse != null){
                 List<Article> articles = newsResponse.getArticles();
                 articles.stream().forEach(article -> System.out.println(article.toString()));
