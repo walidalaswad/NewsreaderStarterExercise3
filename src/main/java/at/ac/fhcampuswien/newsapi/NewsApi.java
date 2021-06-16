@@ -24,7 +24,7 @@ public class NewsApi {
      *
      * Example URL: https://newsapi.org/v2/top-headlines?country=us&apiKey=myKey
      */
-    public static final String NEWS_API_URL = "http://newsapi.org/v2/%s?q=%s&apiKey=%s";
+    public static final String NEWS_API_URL = "http://newsapi.org/v2/%s?q=%s&apiKey=c7b3c13cf0ba4b4db0f6f086b526c460";
 
     private Endpoint endpoint;
     private String q;
@@ -114,7 +114,7 @@ public class NewsApi {
         this.endpoint = endpoint;
     }
 
-    protected String requestData() {
+    protected String requestData() throws NewsApiException {
         String url = buildURL();
         System.out.println("URL: " + url);
         URL obj = null;
@@ -123,6 +123,7 @@ public class NewsApi {
         } catch (MalformedURLException e) {
             // TODO improve ErrorHandling
             e.printStackTrace();
+            throw new NewsApiException("There was an error when you were requesting the data: " + e);
         }
         HttpURLConnection con;
         StringBuilder response = new StringBuilder();
@@ -136,71 +137,80 @@ public class NewsApi {
             in.close();
         } catch (IOException e) {
             // TODO improve ErrorHandling
-            System.out.println("Error "+e.getMessage());
+            System.out.println("Error " + e.getMessage());
+            throw new NewsApiException("There was an IOException at the NewsApi class " + e);
         }
+
         return response.toString();
+
     }
 
-    protected String buildURL() {
+    protected String buildURL() throws NewsApiException {
         // TODO ErrorHandling
-        String urlbase = String.format(NEWS_API_URL,getEndpoint().getValue(),getQ(),getApiKey());
+        if(NEWS_API_URL.equals("")) throw new NewsApiException("Please provide a NewsApi URL!");
+        if(getEndpoint().getValue().equals("")) throw new NewsApiException("Please provide an Endpoint!");
+        if(getQ().equals("")) throw new NewsApiException("Please provide a Q!");
+        if(getApiKey().equals("")) throw new NewsApiException("Please provide an ApiKey, read the PDF on how to do it!");
+
+        String urlbase = String.format(NEWS_API_URL, getEndpoint().getValue(), getQ(), getApiKey());
         StringBuilder sb = new StringBuilder(urlbase);
 
         System.out.println(urlbase);
 
-        if(getFrom() != null){
+        if (getFrom() != null) {
             sb.append(DELIMITER).append("from=").append(getFrom());
         }
-        if(getTo() != null){
+        if (getTo() != null) {
             sb.append(DELIMITER).append("to=").append(getTo());
         }
-        if(getPage() != null){
+        if (getPage() != null) {
             sb.append(DELIMITER).append("page=").append(getPage());
         }
-        if(getPageSize() != null){
+        if (getPageSize() != null) {
             sb.append(DELIMITER).append("pageSize=").append(getPageSize());
         }
-        if(getLanguage() != null){
+        if (getLanguage() != null) {
             sb.append(DELIMITER).append("language=").append(getLanguage());
         }
-        if(getSourceCountry() != null){
+        if (getSourceCountry() != null) {
             sb.append(DELIMITER).append("country=").append(getSourceCountry());
         }
-        if(getSourceCategory() != null){
+        if (getSourceCategory() != null) {
             sb.append(DELIMITER).append("category=").append(getSourceCategory());
         }
-        if(getDomains() != null){
+        if (getDomains() != null) {
             sb.append(DELIMITER).append("domains=").append(getDomains());
         }
-        if(getExcludeDomains() != null){
+        if (getExcludeDomains() != null) {
             sb.append(DELIMITER).append("excludeDomains=").append(getExcludeDomains());
         }
-        if(getqInTitle() != null){
+        if (getqInTitle() != null) {
             sb.append(DELIMITER).append("qInTitle=").append(getqInTitle());
         }
-        if(getSortBy() != null){
+        if (getSortBy() != null) {
             sb.append(DELIMITER).append("sortBy=").append(getSortBy());
         }
         return sb.toString();
     }
 
-    public NewsResponse getNews() {
-        NewsResponse newsReponse = null;
+    public NewsResponse getNews() throws NewsApiException {
+        NewsResponse newsResponse = null;
         String jsonResponse = requestData();
         if(jsonResponse != null && !jsonResponse.isEmpty()){
 
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                newsReponse = objectMapper.readValue(jsonResponse, NewsResponse.class);
-                if(!"ok".equals(newsReponse.getStatus())){
-                    System.out.println("Error: "+newsReponse.getStatus());
+                newsResponse = objectMapper.readValue(jsonResponse, NewsResponse.class);
+                if(!"ok".equals(newsResponse.getStatus())){
+                    System.out.println("Error: " + newsResponse.getStatus());
                 }
             } catch (JsonProcessingException e) {
-                System.out.println("Error: "+e.getMessage());
+                System.out.println("Error: " + e.getMessage());
+                throw new NewsApiException("Something bad happened with processing the JSON: " + e);
             }
         }
         //TODO improve Errorhandling
-        return newsReponse;
+        return newsResponse;
     }
 }
 
